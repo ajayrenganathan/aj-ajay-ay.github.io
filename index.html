@@ -23,7 +23,7 @@
             --border: rgba(45, 42, 38, 0.1);
             --shadow: rgba(45, 42, 38, 0.08);
             --shadow-hover: rgba(45, 42, 38, 0.15);
-            --grain-opacity: 0.018;
+            --grain-opacity: 0.04;
 
             /* Typography */
             --font-display: 'Instrument Serif', Georgia, serif;
@@ -65,12 +65,22 @@
 
         body {
             font-family: var(--font-body);
-            background-color: var(--bg-primary);
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(193, 127, 89, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(193, 127, 89, 0.02) 0%, transparent 50%),
+                var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.7;
             overflow-x: hidden;
             scroll-behavior: smooth;
             transition: background-color var(--transition-medium), color var(--transition-medium);
+        }
+
+        [data-theme="dark"] body {
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(122, 162, 171, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(122, 162, 171, 0.03) 0%, transparent 50%),
+                var(--bg-primary);
         }
 
         /* Subtle grain texture for tactile warmth */
@@ -84,7 +94,7 @@
             pointer-events: none;
             z-index: 9999;
             opacity: var(--grain-opacity);
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
         header {
@@ -359,19 +369,45 @@
         .hero-cta {
             display: inline-block;
             font-family: var(--font-body);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            color: var(--bg-primary);
-            background-color: var(--text-primary);
-            padding: 0.9rem 2rem;
-            border-radius: 4px;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.85rem 2rem;
+            border: 1px solid rgba(193, 127, 89, 0.2);
+            border-radius: 50px;
             text-decoration: none;
-            transition: all var(--transition-fast);
+            transition: all 0.4s ease;
+            margin-top: 2.5rem;
         }
 
         .hero-cta:hover {
-            background-color: var(--accent);
-            transform: translateY(-2px);
+            color: var(--text-primary);
+            background: rgba(193, 127, 89, 0.12);
+            border-color: rgba(193, 127, 89, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 10px 40px rgba(193, 127, 89, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="dark"] .hero-cta {
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(122, 162, 171, 0.2);
+        }
+
+        [data-theme="dark"] .hero-cta:hover {
+            color: var(--text-primary);
+            background: rgba(122, 162, 171, 0.15);
+            border-color: rgba(122, 162, 171, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 10px 40px rgba(122, 162, 171, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .scroll-prompt {
@@ -392,7 +428,6 @@
             0%, 100% { transform: translateX(-50%) translateY(0); }
             50% { transform: translateX(-50%) translateY(8px); }
         }
-
 
         .section {
             padding: var(--section-padding) 2rem;

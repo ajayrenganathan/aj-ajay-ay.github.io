@@ -17,6 +17,10 @@
 
   "skills": [
     {
+      "title": "AI Engineering",
+      "description": "Architecting agentic systems and LLM-powered applications. Building intelligent automation with modern AI frameworks."
+    },
+    {
       "title": "Cloud Architecture",
       "description": "Designing and implementing scalable, secure cloud solutions on AWS. Infrastructure as code with Terraform."
     },
@@ -73,7 +77,7 @@
     {
       "title": "AWS Solutions Architect",
       "description": "Professional certification for cloud architecture",
-      "image": "assets/images/certifications/aws-sa.png"
+      "image": "assets/images/certifications/aws-solutions-architect.png"
     }
   ],
 
