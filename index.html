@@ -89,22 +89,6 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
-        .scroll-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(to right, var(--accent), var(--highlight));
-            z-index: 1000;
-            transition: width 0.3s;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
         header {
             position: fixed;
             top: 0;
@@ -375,6 +359,7 @@
 
         .section {
             padding: var(--section-padding) 2rem;
+            transition: background-color var(--transition-medium);
         }
 
         .section:nth-child(even) {
@@ -675,33 +660,6 @@
 
         .github-link:hover {
             color: var(--accent-hover);
-        }
-
-        .about-section {
-            padding: 6rem 0;
-        }
-        
-        .about-section:nth-child(even) {
-            background-color: white;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 3.5rem;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--secondary);
-            position: relative;
-        }
-        
-        .section-title::after {
-            content: "";
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            margin: 0.8rem auto;
-            border-radius: 2px;
         }
 
         .contact-content {
@@ -1080,26 +1038,23 @@
 }
         
         footer {
-            background-color: var(--dark);
-            color: white;
+            padding: 3rem 2rem;
             text-align: center;
-            padding: 2rem 0;
+            border-top: 1px solid var(--border);
         }
-        
+
         footer p {
-            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
-        
-        .emoji {
-            display: inline-block;
-            transform-origin: center;
-            animation: pulse 2s infinite;
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
         }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+
+        footer a:hover {
+            text-decoration: underline;
         }
         
         /* Mobile responsiveness */
@@ -1237,65 +1192,18 @@
 
             createSubtleBackdrop();
 
-            // Add scroll indicator
-            const scrollIndicator = document.createElement('div');
-            scrollIndicator.className = 'scroll-indicator';
-            document.body.appendChild(scrollIndicator);
-
-            // Update scroll indicator width
-            window.addEventListener('scroll', () => {
-                const winScroll = document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-                scrollIndicator.style.width = scrolled + '%';
-            });
-
-            // Smooth scroll with animation for nav links
+            // Smooth scroll for nav links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
-                    
+
                     if (targetElement) {
-                        // Create ripple effect
-                        const ripple = document.createElement('div');
-                        ripple.style.position = 'fixed';
-                        ripple.style.width = '20px';
-                        ripple.style.height = '20px';
-                        ripple.style.borderRadius = '50%';
-                        ripple.style.backgroundColor = 'var(--accent)';
-                        ripple.style.opacity = '0.6';
-                        ripple.style.pointerEvents = 'none';
-                        ripple.style.left = e.clientX - 10 + 'px';
-                        ripple.style.top = e.clientY - 10 + 'px';
-                        ripple.style.transition = 'transform 0.6s, opacity 0.6s';
-                        document.body.appendChild(ripple);
-
-                        // Animate ripple
-                        requestAnimationFrame(() => {
-                            ripple.style.transform = 'scale(50)';
-                            ripple.style.opacity = '0';
-                        });
-
-                        // Remove ripple after animation
-                        setTimeout(() => ripple.remove(), 600);
-
-                        // Smooth scroll to target
                         targetElement.scrollIntoView({
                             behavior: 'smooth',
                             block: 'start'
                         });
-
-                        // Add highlight effect to section
-                        targetElement.style.transition = 'transform 0.3s, box-shadow 0.3s';
-                        targetElement.style.transform = 'scale(0.99)';
-                        targetElement.style.boxShadow = '0 0 20px rgba(76, 201, 240, 0.3)';
-
-                        setTimeout(() => {
-                            targetElement.style.transform = '';
-                            targetElement.style.boxShadow = '';
-                        }, 300);
                     }
                 });
             });
@@ -1596,6 +1504,21 @@
     </div>
 </section>
 
+<section id="certifications" class="section fade-in">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Certifications</h2>
+        </div>
+        <div class="certifications-grid">
+            <div class="certification-card">
+                <img src="assets/images/certifications/aws-solutions-architect.png" alt="AWS Solutions Architect">
+                <h3>AWS Solutions Architect</h3>
+                <p>Professional certification for cloud architecture</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="contact" class="section fade-in">
     <div class="container">
         <div class="section-header">
@@ -1638,21 +1561,8 @@
     </form>
 </div>
 
-<section id="certifications" class="section fade-in">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Certifications</h2>
-        </div>
-        <div class="certifications-grid">
-            <div class="certification-card">
-                <img src="assets/images/certifications/aws-solutions-architect.png" alt="AWS Solutions Architect">
-                <h3>AWS Solutions Architect</h3>
-                <p>Professional certification for cloud architecture</p>
-            </div>
-        </div>
-    </div>
-</section>
-    
-
-    
-
+<footer>
+    <p>Built with curiosity by Ajay Renganathan</p>
+</footer>
+</body>
+</html>
