@@ -23,7 +23,6 @@
             --border: rgba(45, 42, 38, 0.1);
             --shadow: rgba(45, 42, 38, 0.08);
             --shadow-hover: rgba(45, 42, 38, 0.15);
-            --logo-opacity: 0.06;
             --grain-opacity: 0.018;
 
             /* Typography */
@@ -55,7 +54,6 @@
             --border: rgba(232, 230, 227, 0.1);
             --shadow: rgba(0, 0, 0, 0.2);
             --shadow-hover: rgba(0, 0, 0, 0.35);
-            --logo-opacity: 0.08;
             --grain-opacity: 0.012;
         }
         
@@ -275,16 +273,6 @@
             overflow: hidden;
         }
 
-        .hero-backdrop {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
         .hero-content {
             position: relative;
             z-index: 1;
@@ -405,17 +393,6 @@
             50% { transform: translateX(-50%) translateY(8px); }
         }
 
-        .tech-logo {
-            position: absolute;
-            width: 48px;
-            height: 48px;
-            opacity: var(--logo-opacity);
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            filter: grayscale(100%);
-            transition: opacity var(--transition-slow);
-        }
 
         .section {
             padding: var(--section-padding) 2rem;
@@ -1435,53 +1412,6 @@
                 });
             });
 
-            // Subtle Tech Backdrop
-            const techLogos = [
-                'python.png', 'javascript.png', 'aws.png', 'docker.png',
-                'kubernetes.png', 'mongodb.png', 'postgresql.png', 'elasticsearch.png',
-                'terraform.png', 'flask.png', 'django.png', 'fastapi.svg',
-                'kafka.png', 'github.png'
-            ];
-
-            function createSubtleBackdrop() {
-                const backdrop = document.getElementById('heroBackdrop');
-                if (!backdrop) return;
-
-                techLogos.forEach((logo, index) => {
-                    const el = document.createElement('div');
-                    el.className = 'tech-logo';
-                    el.style.backgroundImage = `url('assets/images/tech-logos/${logo}')`;
-
-                    // Distribute across the viewport
-                    const col = index % 5;
-                    const row = Math.floor(index / 5);
-                    const xBase = (col * 20) + 5 + (Math.random() * 10);
-                    const yBase = (row * 30) + 15 + (Math.random() * 15);
-
-                    el.style.left = `${xBase}%`;
-                    el.style.top = `${yBase}%`;
-
-                    // Very slow drift animation
-                    const duration = 40 + Math.random() * 30; // 40-70 seconds
-                    const xDrift = 20 + Math.random() * 30;
-                    const yDrift = 15 + Math.random() * 25;
-
-                    el.animate([
-                        { transform: 'translate(0, 0)' },
-                        { transform: `translate(${xDrift}px, ${yDrift}px)` }
-                    ], {
-                        duration: duration * 1000,
-                        iterations: Infinity,
-                        direction: 'alternate',
-                        easing: 'ease-in-out'
-                    });
-
-                    backdrop.appendChild(el);
-                });
-            }
-
-            createSubtleBackdrop();
-
             // Smooth scroll for nav links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
@@ -1621,7 +1551,6 @@
     </header>
 
     <section class="hero">
-        <div class="hero-backdrop" id="heroBackdrop"></div>
         <div class="hero-content">
             <h1>
                 <div class="hero-title-container">
