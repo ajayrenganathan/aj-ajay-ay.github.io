@@ -299,6 +299,26 @@
             color: var(--text-primary);
             margin-bottom: 1.5rem;
             line-height: 1.2;
+            letter-spacing: 0.04em;
+        }
+
+        .hero-content h1 .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background-color: var(--accent);
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        .hero-content h1 .typing-cursor.hidden {
+            opacity: 0;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
         .hero-tagline {
@@ -1091,6 +1111,28 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Typing effect for hero name
+            const typedName = document.getElementById('typedName');
+            const typingCursor = document.getElementById('typingCursor');
+            const nameText = 'Ajay Renganathan';
+            let charIndex = 0;
+
+            function typeCharacter() {
+                if (charIndex < nameText.length) {
+                    typedName.textContent += nameText.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeCharacter, 100);
+                } else {
+                    // Hide cursor after typing is complete (optional: keep it blinking)
+                    setTimeout(() => {
+                        typingCursor.classList.add('hidden');
+                    }, 2000);
+                }
+            }
+
+            // Start typing after a brief pause to show blinking cursor first
+            setTimeout(typeCharacter, 800);
+
             // Theme Toggle
             const themeToggle = document.querySelector('.theme-toggle');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -1333,7 +1375,7 @@
     <section class="hero">
         <div class="hero-backdrop" id="heroBackdrop"></div>
         <div class="hero-content">
-            <h1>Ajay Renganathan</h1>
+            <h1><span id="typedName"></span><span class="typing-cursor" id="typingCursor"></span></h1>
             <p class="hero-tagline">Software architect. Perpetually curious.<br>Building simple systems for complex problems.</p>
             <a href="#contact" class="hero-cta">Let's Build Something</a>
         </div>
