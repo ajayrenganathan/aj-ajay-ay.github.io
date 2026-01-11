@@ -23,8 +23,7 @@
             --border: rgba(45, 42, 38, 0.1);
             --shadow: rgba(45, 42, 38, 0.08);
             --shadow-hover: rgba(45, 42, 38, 0.15);
-            --logo-opacity: 0.06;
-            --grain-opacity: 0.018;
+            --grain-opacity: 0.04;
 
             /* Typography */
             --font-display: 'Instrument Serif', Georgia, serif;
@@ -55,7 +54,6 @@
             --border: rgba(232, 230, 227, 0.1);
             --shadow: rgba(0, 0, 0, 0.2);
             --shadow-hover: rgba(0, 0, 0, 0.35);
-            --logo-opacity: 0.08;
             --grain-opacity: 0.012;
         }
         
@@ -67,12 +65,22 @@
 
         body {
             font-family: var(--font-body);
-            background-color: var(--bg-primary);
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(193, 127, 89, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(193, 127, 89, 0.02) 0%, transparent 50%),
+                var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.7;
             overflow-x: hidden;
             scroll-behavior: smooth;
             transition: background-color var(--transition-medium), color var(--transition-medium);
+        }
+
+        [data-theme="dark"] body {
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(122, 162, 171, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(122, 162, 171, 0.03) 0%, transparent 50%),
+                var(--bg-primary);
         }
 
         /* Subtle grain texture for tactile warmth */
@@ -86,7 +94,7 @@
             pointer-events: none;
             z-index: 9999;
             opacity: var(--grain-opacity);
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
         header {
@@ -275,16 +283,6 @@
             overflow: hidden;
         }
 
-        .hero-backdrop {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
         .hero-content {
             position: relative;
             z-index: 1;
@@ -371,19 +369,45 @@
         .hero-cta {
             display: inline-block;
             font-family: var(--font-body);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            color: var(--bg-primary);
-            background-color: var(--text-primary);
-            padding: 0.9rem 2rem;
-            border-radius: 4px;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.85rem 2rem;
+            border: 1px solid rgba(193, 127, 89, 0.2);
+            border-radius: 50px;
             text-decoration: none;
-            transition: all var(--transition-fast);
+            transition: all 0.4s ease;
+            margin-top: 2.5rem;
         }
 
         .hero-cta:hover {
-            background-color: var(--accent);
-            transform: translateY(-2px);
+            color: var(--text-primary);
+            background: rgba(193, 127, 89, 0.12);
+            border-color: rgba(193, 127, 89, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 10px 40px rgba(193, 127, 89, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="dark"] .hero-cta {
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(122, 162, 171, 0.2);
+        }
+
+        [data-theme="dark"] .hero-cta:hover {
+            color: var(--text-primary);
+            background: rgba(122, 162, 171, 0.15);
+            border-color: rgba(122, 162, 171, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 10px 40px rgba(122, 162, 171, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .scroll-prompt {
@@ -403,18 +427,6 @@
         @keyframes gentleBounce {
             0%, 100% { transform: translateX(-50%) translateY(0); }
             50% { transform: translateX(-50%) translateY(8px); }
-        }
-
-        .tech-logo {
-            position: absolute;
-            width: 48px;
-            height: 48px;
-            opacity: var(--logo-opacity);
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            filter: grayscale(100%);
-            transition: opacity var(--transition-slow);
         }
 
         .section {
@@ -714,6 +726,61 @@
         .author-info p {
             font-size: 0.8rem;
             color: var(--text-muted);
+        }
+
+        /* Testimonials Carousel */
+        #testimonialsContainer {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .testimonials-wrapper {
+            position: relative;
+            min-height: 320px;
+        }
+
+        .testimonials-wrapper .testimonial-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+        }
+
+        .testimonials-wrapper .testimonial-card.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+            position: relative;
+        }
+
+        .testimonial-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .testimonial-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: none;
+            background-color: var(--border);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .testimonial-dot:hover {
+            background-color: var(--text-muted);
+        }
+
+        .testimonial-dot.active {
+            background-color: var(--accent);
+            transform: scale(1.2);
         }
 
         .github-link {
@@ -1195,6 +1262,137 @@
             // Start typing after a brief pause to show blinking cursor first
             setTimeout(typeCommand, 600);
 
+            // Load site data from JSON and render content
+            fetch('data/site-data.json')
+                .then(response => response.json())
+                .then(data => {
+                    renderAbout(data);
+                    renderSkills(data.skills);
+                    renderProjects(data.projects);
+                    renderCertifications(data.certifications);
+                    renderTestimonials(data.testimonials);
+                })
+                .catch(error => console.error('Error loading site data:', error));
+
+            function renderAbout(data) {
+                const container = document.getElementById('aboutContent');
+                if (!container) return;
+
+                let html = '';
+                data.about.forEach((paragraph, index) => {
+                    html += `<p>${paragraph}</p>`;
+                    // Add quote after second paragraph
+                    if (index === 1 && data.personal.quote) {
+                        html += `<blockquote class="pull-quote">${data.personal.quote}</blockquote>`;
+                    }
+                });
+                container.innerHTML = html;
+            }
+
+            function renderSkills(skills) {
+                const container = document.getElementById('skillsGrid');
+                if (!container) return;
+
+                container.innerHTML = skills.map(skill => `
+                    <div class="skill-card">
+                        <h3>${skill.title}</h3>
+                        <p>${skill.description}</p>
+                    </div>
+                `).join('');
+            }
+
+            function renderProjects(projects) {
+                const container = document.getElementById('projectsGrid');
+                if (!container) return;
+
+                container.innerHTML = projects.map(project => `
+                    <div class="project-card">
+                        <div class="project-media">
+                            <img src="${project.image}" alt="${project.title}">
+                        </div>
+                        <div class="project-content">
+                            <h3>${project.title}</h3>
+                            <p>${project.description}</p>
+                            <p class="project-impact">${project.impact}</p>
+                            <div class="project-tags">
+                                ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+                            </div>
+                            <a href="${project.link}" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            function renderCertifications(certifications) {
+                const container = document.getElementById('certificationsGrid');
+                if (!container) return;
+
+                container.innerHTML = certifications.map(cert => `
+                    <div class="certification-card">
+                        <img src="${cert.image}" alt="${cert.title}">
+                        <h3>${cert.title}</h3>
+                        <p>${cert.description}</p>
+                    </div>
+                `).join('');
+            }
+
+            function renderTestimonials(testimonials) {
+                const container = document.getElementById('testimonialsContainer');
+                if (!container) return;
+
+                // Create a testimonial carousel/slider
+                container.innerHTML = `
+                    <div class="testimonials-wrapper">
+                        ${testimonials.map((t, index) => `
+                            <div class="testimonial-card ${index === 0 ? 'active' : ''}" data-index="${index}">
+                                <p class="testimonial-text">${t.quote}</p>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">${t.initials}</div>
+                                    <div class="author-info">
+                                        <h4>${t.name}</h4>
+                                        <p>${t.title}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ${testimonials.length > 1 ? `
+                        <div class="testimonial-nav">
+                            ${testimonials.map((_, index) => `
+                                <button class="testimonial-dot ${index === 0 ? 'active' : ''}" data-index="${index}"></button>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                `;
+
+                // Add navigation functionality if multiple testimonials
+                if (testimonials.length > 1) {
+                    const dots = container.querySelectorAll('.testimonial-dot');
+                    const cards = container.querySelectorAll('.testimonial-card');
+                    let currentIndex = 0;
+
+                    function showTestimonial(index) {
+                        cards.forEach(card => card.classList.remove('active'));
+                        dots.forEach(dot => dot.classList.remove('active'));
+                        cards[index].classList.add('active');
+                        dots[index].classList.add('active');
+                        currentIndex = index;
+                    }
+
+                    dots.forEach(dot => {
+                        dot.addEventListener('click', () => {
+                            showTestimonial(parseInt(dot.dataset.index));
+                        });
+                    });
+
+                    // Auto-rotate testimonials every 8 seconds
+                    setInterval(() => {
+                        const nextIndex = (currentIndex + 1) % testimonials.length;
+                        showTestimonial(nextIndex);
+                    }, 8000);
+                }
+            }
+
             // Theme Toggle
             const themeToggle = document.querySelector('.theme-toggle');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -1248,53 +1446,6 @@
                     }
                 });
             });
-
-            // Subtle Tech Backdrop
-            const techLogos = [
-                'python.png', 'javascript.png', 'aws.png', 'docker.png',
-                'kubernetes.png', 'mongodb.png', 'postgresql.png', 'elasticsearch.png',
-                'terraform.png', 'flask.png', 'django.png', 'fastapi.svg',
-                'kafka.png', 'github.png'
-            ];
-
-            function createSubtleBackdrop() {
-                const backdrop = document.getElementById('heroBackdrop');
-                if (!backdrop) return;
-
-                techLogos.forEach((logo, index) => {
-                    const el = document.createElement('div');
-                    el.className = 'tech-logo';
-                    el.style.backgroundImage = `url('assets/images/tech-logos/${logo}')`;
-
-                    // Distribute across the viewport
-                    const col = index % 5;
-                    const row = Math.floor(index / 5);
-                    const xBase = (col * 20) + 5 + (Math.random() * 10);
-                    const yBase = (row * 30) + 15 + (Math.random() * 15);
-
-                    el.style.left = `${xBase}%`;
-                    el.style.top = `${yBase}%`;
-
-                    // Very slow drift animation
-                    const duration = 40 + Math.random() * 30; // 40-70 seconds
-                    const xDrift = 20 + Math.random() * 30;
-                    const yDrift = 15 + Math.random() * 25;
-
-                    el.animate([
-                        { transform: 'translate(0, 0)' },
-                        { transform: `translate(${xDrift}px, ${yDrift}px)` }
-                    ], {
-                        duration: duration * 1000,
-                        iterations: Infinity,
-                        direction: 'alternate',
-                        easing: 'ease-in-out'
-                    });
-
-                    backdrop.appendChild(el);
-                });
-            }
-
-            createSubtleBackdrop();
 
             // Smooth scroll for nav links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1435,7 +1586,6 @@
     </header>
 
     <section class="hero">
-        <div class="hero-backdrop" id="heroBackdrop"></div>
         <div class="hero-content">
             <h1>
                 <div class="hero-title-container">
@@ -1456,19 +1606,8 @@
             <div class="section-header">
                 <h2 class="section-title">About</h2>
             </div>
-            <div class="section-content">
-                <p>
-                    I'm a software architect and engineer with a deep curiosity for how systems work at scale. My expertise spans cloud architecture, DevOps practices, and building robust distributed systems.
-                </p>
-                <p>
-                    I believe the best solutions are often the simplest ones. Complex problems don't require complex solutions — they require thoughtful decomposition and elegant design.
-                </p>
-                <blockquote class="pull-quote">
-                    Simplicity is the key to scaling.
-                </blockquote>
-                <p>
-                    When I'm not architecting systems, I'm tinkering with new technologies, exploring infrastructure patterns, and finding better ways to automate the mundane.
-                </p>
+            <div class="section-content" id="aboutContent">
+                <!-- Populated by JavaScript from data/site-data.json -->
             </div>
         </div>
     </section>
@@ -1508,17 +1647,8 @@
                         View Profile <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">
-                        Ajay's ability to break down complex infrastructure problems into elegant, maintainable solutions is exceptional. His work on our cloud migration reduced our deployment time by 80% while improving reliability.
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JD</div>
-                        <div class="author-info">
-                            <h4>John Doe</h4>
-                            <p>Engineering Manager, Tech Corp</p>
-                        </div>
-                    </div>
+                <div id="testimonialsContainer">
+                    <!-- Populated by JavaScript from data/site-data.json -->
                 </div>
             </div>
         </div>
@@ -1529,31 +1659,8 @@
             <div class="section-header">
                 <h2 class="section-title">Skills</h2>
             </div>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <h3>Cloud Architecture</h3>
-                    <p>Designing and implementing scalable, secure cloud solutions on AWS. Infrastructure as code with Terraform.</p>
-                </div>
-                <div class="skill-card">
-                    <h3>DevOps & Automation</h3>
-                    <p>CI/CD pipelines, GitOps practices, and infrastructure automation. Making deployments boring and reliable.</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Backend Engineering</h3>
-                    <p>Python, FastAPI, Django, Flask. Building robust APIs and microservices that scale.</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Containerization</h3>
-                    <p>Docker and Kubernetes for consistent deployments across environments. Container orchestration at scale.</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Data Systems</h3>
-                    <p>PostgreSQL, MongoDB, Elasticsearch. Designing data pipelines with Kafka for real-time processing.</p>
-                </div>
-                <div class="skill-card">
-                    <h3>System Design</h3>
-                    <p>Distributed systems, high availability, fault tolerance. Breaking down complexity into simple, composable parts.</p>
-                </div>
+            <div class="skills-grid" id="skillsGrid">
+                <!-- Populated by JavaScript from data/site-data.json -->
             </div>
         </div>
     </section>
@@ -1563,55 +1670,8 @@
         <div class="section-header">
             <h2 class="section-title">Projects</h2>
         </div>
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-media">
-                    <img src="assets/images/project1.jpg" alt="Cloud Infrastructure Automation">
-                </div>
-                <div class="project-content">
-                    <h3>Cloud Infrastructure Automation</h3>
-                    <p>Automated multi-region AWS infrastructure deployment with Terraform modules and GitOps workflows.</p>
-                    <p class="project-impact">Reduced provisioning time from 2 days to 15 minutes</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Terraform</span>
-                        <span class="project-tag">AWS</span>
-                        <span class="project-tag">GitOps</span>
-                    </div>
-                    <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-media">
-                    <img src="assets/images/project2.jpg" alt="Microservices Platform">
-                </div>
-                <div class="project-content">
-                    <h3>Microservices Platform</h3>
-                    <p>Scalable microservices architecture with service mesh, distributed tracing, and automated scaling.</p>
-                    <p class="project-impact">Handles 50K+ requests/second with 99.9% uptime</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Kubernetes</span>
-                        <span class="project-tag">Docker</span>
-                        <span class="project-tag">Istio</span>
-                    </div>
-                    <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-media">
-                    <img src="assets/images/project3.jpg" alt="Real-time Data Pipeline">
-                </div>
-                <div class="project-content">
-                    <h3>Real-time Data Pipeline</h3>
-                    <p>Event-driven data pipeline processing millions of events with exactly-once semantics.</p>
-                    <p class="project-impact">Processing 2M+ events/day with sub-second latency</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Kafka</span>
-                        <span class="project-tag">Elasticsearch</span>
-                        <span class="project-tag">Python</span>
-                    </div>
-                    <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Populated by JavaScript from data/site-data.json -->
         </div>
     </div>
 </section>
@@ -1621,12 +1681,8 @@
         <div class="section-header">
             <h2 class="section-title">Certifications</h2>
         </div>
-        <div class="certifications-grid">
-            <div class="certification-card">
-                <img src="assets/images/certifications/aws-solutions-architect.png" alt="AWS Solutions Architect">
-                <h3>AWS Solutions Architect</h3>
-                <p>Professional certification for cloud architecture</p>
-            </div>
+        <div class="certifications-grid" id="certificationsGrid">
+            <!-- Populated by JavaScript from data/site-data.json -->
         </div>
     </div>
 </section>
