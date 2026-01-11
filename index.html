@@ -300,20 +300,60 @@
             margin-bottom: 1.5rem;
             line-height: 1.2;
             letter-spacing: 0.04em;
+            min-height: 1.2em;
         }
 
-        .hero-content h1 .typing-cursor {
+        /* Terminal typing effect */
+        .terminal-line {
+            font-family: var(--font-mono);
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: var(--accent);
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .terminal-line .prompt {
+            color: var(--text-muted);
+        }
+
+        .terminal-line.fade-out {
+            opacity: 0;
+        }
+
+        .hero-name {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            letter-spacing: 0.04em;
+            opacity: 0;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            white-space: nowrap;
+        }
+
+        .hero-name.reveal {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .hero-title-container {
+            position: relative;
+            min-height: clamp(3rem, 7vw, 4.5rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .typing-cursor {
             display: inline-block;
-            width: 3px;
+            width: 2px;
             height: 1em;
             background-color: var(--accent);
-            margin-left: 4px;
+            margin-left: 2px;
             animation: blink 1s step-end infinite;
             vertical-align: text-bottom;
-        }
-
-        .hero-content h1 .typing-cursor.hidden {
-            opacity: 0;
         }
 
         @keyframes blink {
@@ -393,6 +433,7 @@
 
         .section-header {
             margin-bottom: 3rem;
+            text-align: center;
         }
 
         .section-title {
@@ -410,13 +451,21 @@
             height: 2px;
             background-color: var(--accent);
             margin-top: 0.75rem;
+            margin-left: auto;
+            margin-right: auto;
             opacity: 0.6;
+        }
+
+        .section-content {
+            text-align: center;
         }
 
         .section-content p {
             color: var(--text-secondary);
             margin-bottom: 1.25rem;
             max-width: 65ch;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .section-content p:last-child {
@@ -1111,27 +1160,40 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Typing effect for hero name
-            const typedName = document.getElementById('typedName');
+            // Terminal typing effect for hero name
+            const terminalText = document.getElementById('terminalText');
+            const terminalLine = document.getElementById('terminalLine');
             const typingCursor = document.getElementById('typingCursor');
-            const nameText = 'Ajay Renganathan';
+            const heroName = document.getElementById('heroName');
+            const command = 'echo "Ajay Renganathan"';
             let charIndex = 0;
 
-            function typeCharacter() {
-                if (charIndex < nameText.length) {
-                    typedName.textContent += nameText.charAt(charIndex);
+            function typeCommand() {
+                if (charIndex < command.length) {
+                    terminalText.textContent += command.charAt(charIndex);
                     charIndex++;
-                    setTimeout(typeCharacter, 100);
+                    // Vary typing speed slightly for natural feel
+                    const delay = 50 + Math.random() * 50;
+                    setTimeout(typeCommand, delay);
                 } else {
-                    // Hide cursor after typing is complete (optional: keep it blinking)
+                    // Command typed, now transition to reveal the name
                     setTimeout(() => {
-                        typingCursor.classList.add('hidden');
-                    }, 2000);
+                        // Remove cursor
+                        typingCursor.remove();
+                        // Fade out terminal line
+                        terminalLine.classList.add('fade-out');
+
+                        // After fade out, reveal the name
+                        setTimeout(() => {
+                            terminalLine.style.display = 'none';
+                            heroName.classList.add('reveal');
+                        }, 500);
+                    }, 600);
                 }
             }
 
             // Start typing after a brief pause to show blinking cursor first
-            setTimeout(typeCharacter, 800);
+            setTimeout(typeCommand, 600);
 
             // Theme Toggle
             const themeToggle = document.querySelector('.theme-toggle');
@@ -1375,7 +1437,12 @@
     <section class="hero">
         <div class="hero-backdrop" id="heroBackdrop"></div>
         <div class="hero-content">
-            <h1><span id="typedName"></span><span class="typing-cursor" id="typingCursor"></span></h1>
+            <h1>
+                <div class="hero-title-container">
+                    <span class="terminal-line" id="terminalLine"><span class="prompt">$ </span><span id="terminalText"></span><span class="typing-cursor" id="typingCursor"></span></span>
+                    <span class="hero-name" id="heroName">Ajay Renganathan</span>
+                </div>
+            </h1>
             <p class="hero-tagline">Software architect. Perpetually curious.<br>Building simple systems for complex problems.</p>
             <a href="#contact" class="hero-cta">Let's Build Something</a>
         </div>
