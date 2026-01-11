@@ -5,29 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajay Renganathan | Portfolio</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #4cc9f0;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --highlight: #f72585;
+            /* Warm Minimalist Theme (default) */
+            --bg-primary: #FAF9F7;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F5F4F2;
+            --text-primary: #2D2A26;
+            --text-secondary: #5C5954;
+            --text-muted: #8B8680;
+            --accent: #C17F59;
+            --accent-hover: #A66B48;
+            --accent-subtle: rgba(193, 127, 89, 0.1);
+            --border: rgba(45, 42, 38, 0.1);
+            --shadow: rgba(45, 42, 38, 0.08);
+            --shadow-hover: rgba(45, 42, 38, 0.15);
+            --logo-opacity: 0.06;
+            --grain-opacity: 0.018;
+
+            /* Typography */
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'Source Sans 3', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Spacing */
+            --section-padding: 6rem;
+            --container-width: 900px;
+            --card-radius: 8px;
+
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1A1B1E;
+            --bg-secondary: #242529;
+            --bg-tertiary: #2A2B30;
+            --text-primary: #E8E6E3;
+            --text-secondary: #B8B5B0;
+            --text-muted: #6B6E76;
+            --accent: #7AA2AB;
+            --accent-hover: #8FB5BE;
+            --accent-subtle: rgba(122, 162, 171, 0.15);
+            --border: rgba(232, 230, 227, 0.1);
+            --shadow: rgba(0, 0, 0, 0.2);
+            --shadow-hover: rgba(0, 0, 0, 0.35);
+            --logo-opacity: 0.08;
+            --grain-opacity: 0.012;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', 'Segoe UI', sans-serif;
         }
-        
+
         body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
+            font-family: var(--font-body);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            transition: background-color var(--transition-medium), color var(--transition-medium);
+        }
+
+        /* Subtle grain texture for tactile warmth */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: var(--grain-opacity);
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
         .scroll-indicator {
@@ -47,56 +106,155 @@
         }
         
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 1.5rem 0;
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 100;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: var(--bg-primary);
+            transition: background-color var(--transition-medium), box-shadow var(--transition-medium);
         }
-        
+
+        header.scrolled {
+            box-shadow: 0 1px 20px var(--shadow);
+            backdrop-filter: blur(10px);
+            background-color: rgba(250, 249, 247, 0.9);
+        }
+
+        [data-theme="dark"] header.scrolled {
+            background-color: rgba(26, 27, 30, 0.9);
+        }
+
         .navbar {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            position: relative;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            text-decoration: none;
         }
-        
-        .logo::after {
-            content: '.';
-            color: var(--accent);
-            font-size: 2.5rem;
-            position: absolute;
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
         }
-        
+
         .nav-links {
             display: flex;
             list-style: none;
+            gap: 2rem;
         }
 
+        .nav-links a {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 1.5px;
+            background-color: var(--accent);
+            transition: width var(--transition-fast);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Theme toggle with animated icon transition */
+        .theme-toggle {
+            background: none;
+            border: 1.5px solid var(--border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .theme-toggle i {
+            transition: transform var(--transition-medium), opacity var(--transition-fast);
+            position: absolute;
+        }
+
+        .theme-toggle:hover i {
+            transform: rotate(15deg);
+        }
+
+        .theme-toggle .fa-moon {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+
+        .theme-toggle .fa-sun {
+            opacity: 0;
+            transform: rotate(-90deg);
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-moon {
+            opacity: 0;
+            transform: rotate(90deg);
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-sun {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+
+        [data-theme="dark"] .theme-toggle:hover .fa-sun {
+            transform: rotate(15deg);
+        }
+
+        /* Mobile Navigation */
         .burger-menu {
             display: none;
             flex-direction: column;
             cursor: pointer;
-            padding: 5px;
+            gap: 5px;
         }
 
         .burger-bar {
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            margin: 2px;
-            transition: 0.3s;
+            width: 22px;
+            height: 2px;
+            background-color: var(--text-primary);
+            transition: var(--transition-fast);
         }
 
-        @media screen and (max-width: 768px) {
+        @media (max-width: 768px) {
             .burger-menu {
                 display: flex;
             }
@@ -104,157 +262,117 @@
             .nav-links {
                 display: none;
                 position: fixed;
-                left: -100%;
                 top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--bg-primary);
                 flex-direction: column;
-                background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-                width: 70%;
-                height: 100vh;
                 padding: 2rem;
-                transition: 0.3s;
+                gap: 1.5rem;
+                box-shadow: 0 10px 30px var(--shadow);
             }
 
             .nav-links.active {
-                left: 0;
                 display: flex;
             }
 
-            .nav-links li {
-                margin: 1rem 0;
+            .nav-right {
+                gap: 1rem;
             }
         }
         
-        .nav-links li {
-            margin-left: 2.5rem;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            position: relative;
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
         .hero {
-            position: relative;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #f8f9fa;
+            position: relative;
+            padding: 8rem 2rem 4rem;
             overflow: hidden;
         }
-        
-        .hero::before {
-            content: '';
+
+        .hero-backdrop {
             position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: rgba(67, 97, 238, 0.1);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
             z-index: 0;
         }
-        
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -150px;
-            left: -150px;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: rgba(76, 201, 240, 0.1);
-            z-index: 0;
-        }
-        
+
         .hero-content {
             position: relative;
             z-index: 1;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            height: 100%;
-            padding: 4rem 0;
-            max-width: 800px;
-            width: 100%;
-        }
-
-        .hero-text {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-        
-        .hero-text {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, var(--primary), var(--highlight));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .hero p {
-            font-size: 1.3rem;
             max-width: 700px;
-            margin-bottom: 1rem;
         }
 
-        .hero-buttons {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
+        .hero-content h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
         }
-        
-        .btn {
+
+        .hero-tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+        }
+
+        .hero-cta {
             display: inline-block;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 0.9rem 2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            transition: all 0.3s;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
             font-weight: 500;
-            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+            color: var(--bg-primary);
+            background-color: var(--text-primary);
+            padding: 0.9rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all var(--transition-fast);
         }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(67, 97, 238, 0.4);
+
+        .hero-cta:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
         }
-        
+
+        .scroll-prompt {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-muted);
+            cursor: pointer;
+            animation: gentleBounce 3s ease-in-out infinite;
+        }
+
+        .scroll-prompt i {
+            font-size: 1.25rem;
+        }
+
+        @keyframes gentleBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        .tech-logo {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            opacity: var(--logo-opacity);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: grayscale(100%);
+            transition: opacity var(--transition-slow);
+        }
+
         .about-section {
             padding: 6rem 0;
         }
@@ -280,88 +398,6 @@
             background: linear-gradient(to right, var(--primary), var(--accent));
             margin: 0.8rem auto;
             border-radius: 2px;
-        }
-        
-        .floating-logos {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-        }
-
-        .hero {
-            position: relative;
-            height: calc(100vh - 80px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.02);
-            transition: all 0.5s ease-in-out;
-            margin-top: 80px;
-        }
-
-        .hero.form-active {
-            transform: translateX(-25%) scale(0.95);
-            filter: blur(2px);
-        }
-
-        .scroll-prompt {
-            cursor: pointer;
-            animation: bounce 2s infinite;
-            color: var(--accent);
-            font-size: 2rem;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: 4rem;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .scroll-prompt:hover {
-            opacity: 1;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0) translateX(-50%);
-            }
-            40% {
-                transform: translateY(-20px) translateX(-50%);
-            }
-            60% {
-                transform: translateY(-10px) translateX(-50%);
-            }
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            pointer-events: auto;
         }
 
         .contact-form {
@@ -488,56 +524,6 @@
         .contact-item i {
             font-size: 1.5rem;
             color: var(--accent);
-        }
-
-        .hero {
-            position: relative;
-        }
-
-        .tech-logo {
-            position: absolute;
-            width: 48px;
-            height: 48px;
-            opacity: 0.15;
-            transition: all 0.4s ease;
-            pointer-events: auto;
-            cursor: pointer;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            filter: grayscale(100%) brightness(0.7);
-            backdrop-filter: blur(2px);
-            z-index: 1;
-        }
-
-        .tech-logo:hover {
-            transform: scale(2);
-            opacity: 1;
-            z-index: 100;
-            filter: grayscale(0%) brightness(1);
-            box-shadow: 0 0 20px rgba(67, 97, 238, 0.3);
-        }
-
-        .tech-logo .tooltip {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
-            bottom: 120%;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-            opacity: 0;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            pointer-events: none;
-        }
-
-        .tech-logo:hover .tooltip {
-            opacity: 1;
         }
 
         .project-card {
@@ -780,154 +766,106 @@
         </style>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const techLogos = {
-                'Python': 'python.png',
-                'JavaScript': 'javascript.png',
-                'AWS': 'aws.png',
-                'Docker': 'docker.png',
-                'Kubernetes': 'kubernetes.png',
-                'MongoDB': 'mongodb.png',
-                'PostgreSQL': 'postgresql.png',
-                'Elasticsearch': 'elasticsearch.png',
-                'Terraform': 'terraform.png',
-                'Flask': 'flask.png',
-                'Django': 'django.png',
-                'FastAPI': 'fastapi.svg',
-                'Kafka': 'kafka.png',
-                'GitHub': 'github.png'
-            };
+            // Theme Toggle
+            const themeToggle = document.querySelector('.theme-toggle');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const storedTheme = localStorage.getItem('theme');
 
-            // Function to create and animate a logo
-            function createAnimatedLogo(tech, logoFile, index, total) {
-                const logo = document.createElement('div');
-                logo.className = 'tech-logo';
-                
-                // Calculate evenly spaced positions
-                const rows = Math.ceil(Math.sqrt(total));
-                const cols = Math.ceil(total / rows);
-                const row = Math.floor(index / cols);
-                const col = index % cols;
-                
-                const xPos = (col / (cols - 1)) * 80 + 10;
-                const yPos = (row / (rows - 1)) * 60 + 20;
-                
-                logo.style.left = xPos + '%';
-                logo.style.top = yPos + '%';
-                logo.style.backgroundImage = `url('assets/images/tech-logos/${logoFile}')`;
-
-                const tooltip = document.createElement('div');
-                tooltip.className = 'tooltip';
-                tooltip.textContent = tech;
-                logo.appendChild(tooltip);
-
-                const scale = 0.8 + Math.random() * 0.4;
-                const duration = 25 + Math.random() * 35;
-                const xDistance = 30 + Math.random() * 50;
-                const yDistance = 30 + Math.random() * 50;
-                const delay = Math.random() * -duration;
-                const rotation = Math.random() * 360;
-
-                const animation = logo.animate([
-                    { transform: `scale(${scale}) translate(0, 0) rotate(${rotation}deg)`, opacity: 0.2 },
-                    { transform: `scale(${scale}) translate(${xDistance}px, ${yDistance}px) rotate(${rotation + 360}deg)`, opacity: 0.3 }
-                ], {
-                    duration: duration * 1000,
-                    iterations: Infinity,
-                    direction: 'alternate',
-                    easing: 'ease-in-out',
-                    delay: delay * 1000
-                });
-
-                logo.animation = animation;
-
-                logo.addEventListener('mouseenter', () => {
-                    document.querySelectorAll('.tech-logo').forEach(l => {
-                        if (l.animation) {
-                            l.animation.pause();
-                            l.style.opacity = '0.1';
-                        }
-                    });
-                    logo.style.opacity = '1';
-                    logo.style.filter = 'grayscale(0%)';
-                    logo.style.transform = 'scale(2)';
-                    logo.style.zIndex = '100';
-                });
-
-                logo.addEventListener('mouseleave', () => {
-                    document.querySelectorAll('.tech-logo').forEach(l => {
-                        if (l.animation) {
-                            l.animation.play();
-                            l.style.opacity = '0.15';
-                        }
-                    });
-                    logo.style.filter = 'grayscale(100%)';
-                    logo.style.transform = 'scale(1)';
-                    logo.style.zIndex = '1';
-                });
-
-                return logo;
+            if (storedTheme) {
+                document.documentElement.setAttribute('data-theme', storedTheme);
+            } else if (prefersDark) {
+                document.documentElement.setAttribute('data-theme', 'dark');
             }
 
-            const container = document.getElementById('floatingLogos');
-            
-            // Calculate total number of logos
-            const totalLogos = Object.keys(techLogos).length * 2;
-            let logoIndex = 0;
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-            // Create and animate the logos
-            Object.entries(techLogos).forEach(([tech, logoFile]) => {
-                // Create 2 instances of each logo
-                for (let i = 0; i < 2; i++) {
-                    const logo = createAnimatedLogo(tech, logoFile, logoIndex, totalLogos);
-                    container.appendChild(logo);
-                    logoIndex++;
+                if (newTheme === 'light') {
+                    document.documentElement.removeAttribute('data-theme');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+                localStorage.setItem('theme', newTheme);
+            });
+
+            // Header scroll effect
+            const header = document.querySelector('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
                 }
             });
 
-            // Collision detection
-            function checkCollision(logo1, logo2) {
-                const rect1 = logo1.getBoundingClientRect();
-                const rect2 = logo2.getBoundingClientRect();
-                return !(rect1.right < rect2.left || 
-                        rect1.left > rect2.right || 
-                        rect1.bottom < rect2.top || 
-                        rect1.top > rect2.bottom);
-            }
+            // Active nav link on scroll
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-links a');
 
-            // Update logo positions and handle collisions
-            setInterval(() => {
-                const logos = document.querySelectorAll('.tech-logo');
-                logos.forEach(logo1 => {
-                    logos.forEach(logo2 => {
-                        if (logo1 !== logo2 && checkCollision(logo1, logo2)) {
-                            // Reverse animation direction on collision
-                            if (logo1.animation) logo1.animation.reverse();
-                            if (logo2.animation) logo2.animation.reverse();
-                        }
-                    });
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    if (scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
                 });
-            }, 100);
 
-            // Handle contact form
-            function toggleContactForm(show) {
-                const hero = document.querySelector('.hero');
-                const form = document.getElementById('contactForm');
-                const overlay = document.getElementById('overlay');
-                
-                if (show) {
-                    requestAnimationFrame(() => {
-                        document.body.style.overflow = 'hidden';
-                        hero.classList.add('form-active');
-                        form.classList.add('active');
-                        overlay.classList.add('active');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Subtle Tech Backdrop
+            const techLogos = [
+                'python.png', 'javascript.png', 'aws.png', 'docker.png',
+                'kubernetes.png', 'mongodb.png', 'postgresql.png', 'elasticsearch.png',
+                'terraform.png', 'flask.png', 'django.png', 'fastapi.svg',
+                'kafka.png', 'github.png'
+            ];
+
+            function createSubtleBackdrop() {
+                const backdrop = document.getElementById('heroBackdrop');
+                if (!backdrop) return;
+
+                techLogos.forEach((logo, index) => {
+                    const el = document.createElement('div');
+                    el.className = 'tech-logo';
+                    el.style.backgroundImage = `url('assets/images/tech-logos/${logo}')`;
+
+                    // Distribute across the viewport
+                    const col = index % 5;
+                    const row = Math.floor(index / 5);
+                    const xBase = (col * 20) + 5 + (Math.random() * 10);
+                    const yBase = (row * 30) + 15 + (Math.random() * 15);
+
+                    el.style.left = `${xBase}%`;
+                    el.style.top = `${yBase}%`;
+
+                    // Very slow drift animation
+                    const duration = 40 + Math.random() * 30; // 40-70 seconds
+                    const xDrift = 20 + Math.random() * 30;
+                    const yDrift = 15 + Math.random() * 25;
+
+                    el.animate([
+                        { transform: 'translate(0, 0)' },
+                        { transform: `translate(${xDrift}px, ${yDrift}px)` }
+                    ], {
+                        duration: duration * 1000,
+                        iterations: Infinity,
+                        direction: 'alternate',
+                        easing: 'ease-in-out'
                     });
-                } else {
-                    document.body.style.overflow = '';
-                    hero.classList.remove('form-active');
-                    form.classList.remove('active');
-                    overlay.classList.remove('active');
-                }
+
+                    backdrop.appendChild(el);
+                });
             }
+
+            createSubtleBackdrop();
 
             // Add scroll indicator
             const scrollIndicator = document.createElement('div');
@@ -1009,36 +947,26 @@
                 });
             });
 
-            // Close form when clicking outside
-            document.addEventListener('click', (e) => {
-                const form = document.getElementById('contactForm');
-                const overlay = document.getElementById('overlay');
-                if (e.target === overlay) {
-                    toggleContactForm(false);
-                }
-            });
-
             document.getElementById('messageForm')?.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const email = e.target.querySelector('input[type="email"]').value;
                 const message = e.target.querySelector('textarea').value;
-                
+
                 // Here you would typically send this to your backend
                 console.log('Message received:', { email, message });
-                
-                // Show success message and close form
+
+                // Show success message
                 alert('Thank you for your message! I will get back to you soon.');
                 e.target.reset();
-                toggleContactForm(false);
             });
         });
     </script>
 </head>
 <body>
     <header>
-        <div class="container navbar">
-            <div class="logo">Ajay</div>
-            <nav>
+        <nav class="navbar">
+            <a href="#" class="logo">Ajay Renganathan</a>
+            <div class="nav-right">
                 <div class="burger-menu">
                     <div class="burger-bar"></div>
                     <div class="burger-bar"></div>
@@ -1051,23 +979,23 @@
                     <li><a href="#certifications">Certifications</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-            </nav>
-        </div>
+                <button class="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </nav>
     </header>
 
-    <div id="overlay" class="overlay"></div>
     <section class="hero">
-        <div class="floating-logos" id="floatingLogos"></div>
+        <div class="hero-backdrop" id="heroBackdrop"></div>
         <div class="hero-content">
-            <div class="hero-text">
-                <h1>I am Ajay Renganathan</h1>
-                <p>A passionate software engineer specializing in cloud architecture and DevOps</p>
-                <a href="#" class="btn" onclick="toggleContactForm(true); event.preventDefault();">Get in Touch</a>
-            </div>
-            <div class="scroll-prompt" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' });">
-                <i class="fas fa-chevron-down"></i>
-                <i class="fas fa-chevron-down" style="margin-top: -0.5rem;"></i>
-            </div>
+            <h1>Ajay Renganathan</h1>
+            <p class="hero-tagline">Software architect. Perpetually curious.<br>Building simple systems for complex problems.</p>
+            <a href="#contact" class="hero-cta">Let's Build Something</a>
+        </div>
+        <div class="scroll-prompt" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' });">
+            <i class="fas fa-chevron-down"></i>
         </div>
     </section>
 
