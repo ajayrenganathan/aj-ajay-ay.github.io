@@ -1195,8 +1195,11 @@
             // Smooth scroll for nav links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
                     const targetId = this.getAttribute('href');
+                    // Skip empty hash links (used for onclick handlers)
+                    if (targetId === '#') return;
+
+                    e.preventDefault();
                     const targetElement = document.querySelector(targetId);
 
                     if (targetElement) {
@@ -1210,17 +1213,17 @@
 
             // Burger menu functionality
             const burgerMenu = document.querySelector('.burger-menu');
-            const navLinks = document.querySelector('.nav-links');
+            const navLinksMenu = document.querySelector('.nav-links');
 
             burgerMenu.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
+                navLinksMenu.classList.toggle('active');
             });
 
             // Close navigation when clicking a link on mobile
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.addEventListener('click', () => {
                     if (window.innerWidth <= 768) {
-                        navLinks.classList.remove('active');
+                        navLinksMenu.classList.remove('active');
                     }
                 });
             });
