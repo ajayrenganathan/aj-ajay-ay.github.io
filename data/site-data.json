@@ -1,0 +1,103 @@
+{
+  "personal": {
+    "name": "Ajay Renganathan",
+    "tagline": "Software architect. Perpetually curious.",
+    "subtitle": "Building simple systems for complex problems.",
+    "email": "ajay.renganathan@gmail.com",
+    "linkedin": "https://linkedin.com/in/ajay-renganathan",
+    "github": "aj-ajay-ay",
+    "quote": "Simplicity is the key to scaling."
+  },
+
+  "about": [
+    "I'm a software architect and engineer with a deep curiosity for how systems work at scale. My expertise spans cloud architecture, DevOps practices, and building robust distributed systems.",
+    "I believe the best solutions are often the simplest ones. Complex problems don't require complex solutions — they require thoughtful decomposition and elegant design.",
+    "When I'm not architecting systems, I'm tinkering with new technologies, exploring infrastructure patterns, and finding better ways to automate the mundane."
+  ],
+
+  "skills": [
+    {
+      "title": "Cloud Architecture",
+      "description": "Designing and implementing scalable, secure cloud solutions on AWS. Infrastructure as code with Terraform."
+    },
+    {
+      "title": "DevOps & Automation",
+      "description": "CI/CD pipelines, GitOps practices, and infrastructure automation. Making deployments boring and reliable."
+    },
+    {
+      "title": "Backend Engineering",
+      "description": "Python, FastAPI, Django, Flask. Building robust APIs and microservices that scale."
+    },
+    {
+      "title": "Containerization",
+      "description": "Docker and Kubernetes for consistent deployments across environments. Container orchestration at scale."
+    },
+    {
+      "title": "Data Systems",
+      "description": "PostgreSQL, MongoDB, Elasticsearch. Designing data pipelines with Kafka for real-time processing."
+    },
+    {
+      "title": "System Design",
+      "description": "Distributed systems, high availability, fault tolerance. Breaking down complexity into simple, composable parts."
+    }
+  ],
+
+  "projects": [
+    {
+      "title": "Cloud Infrastructure Automation",
+      "description": "Automated multi-region AWS infrastructure deployment with Terraform modules and GitOps workflows.",
+      "impact": "Reduced provisioning time from 2 days to 15 minutes",
+      "tags": ["Terraform", "AWS", "GitOps"],
+      "image": "assets/images/project1.jpg",
+      "link": "#"
+    },
+    {
+      "title": "Microservices Platform",
+      "description": "Scalable microservices architecture with service mesh, distributed tracing, and automated scaling.",
+      "impact": "Handles 50K+ requests/second with 99.9% uptime",
+      "tags": ["Kubernetes", "Docker", "Istio"],
+      "image": "assets/images/project2.jpg",
+      "link": "#"
+    },
+    {
+      "title": "Real-time Data Pipeline",
+      "description": "Event-driven data pipeline processing millions of events with exactly-once semantics.",
+      "impact": "Processing 2M+ events/day with sub-second latency",
+      "tags": ["Kafka", "Elasticsearch", "Python"],
+      "image": "assets/images/project3.jpg",
+      "link": "#"
+    }
+  ],
+
+  "certifications": [
+    {
+      "title": "AWS Solutions Architect",
+      "description": "Professional certification for cloud architecture",
+      "image": "assets/images/certifications/aws-sa.png"
+    }
+  ],
+
+  "testimonials": [
+    {
+      "name": "Jason Sroka",
+      "title": "Data Scientist and Executive",
+      "relationship": "Manager at Aideo",
+      "initials": "JS",
+      "quote": "Ajay is one of the best software engineers and system architects I've ever worked with. He brings a proactive mindset combined with technical expertise and a solid testing-first approach that allowed us to re-architect and scale our production modeling infrastructure and expand our throughput by 60 times. He is a natural leader who coordinated the efforts of our team of software engineers to hit delivery dates. I heartily and unreservedly recommend him."
+    },
+    {
+      "name": "Brian Davis",
+      "title": "AI for the business of healthcare",
+      "relationship": "Senior colleague at Aideo",
+      "initials": "BD",
+      "quote": "Ajay's defining characteristics are enthusiasm and curiosity. He takes continuous learning seriously — for himself and for his team. I partnered with Ajay to prototype new machine learning systems several times, and relied on his ability to learn new concepts quickly. He was a supportive team member who consistently demonstrated optimism and positivity, even in difficult circumstances."
+    },
+    {
+      "name": "Kunal Sheth",
+      "title": "CTO | Fractional CTO & Tech Advisor",
+      "relationship": "Manager at previous company",
+      "initials": "KS",
+      "quote": "The first thing which came across while interviewing Ajay was his confidence level. It was a no brainer for me to hire him on the spot. Over the next one year, he was my go to guy for brain storming on architecture, machine learning, processes. He was instrumental in driving the backend for the SAAS platform we were building. Would definitely work with him if there was a chance."
+    }
+  ]
+}
